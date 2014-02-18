@@ -22,8 +22,24 @@ char *tracks[] = {
 */
 char *strjoin(char *array[], int n)
 {
-    // TODO: fill this in
-    return NULL;
+
+    int size = 0;
+    int i;
+    for (i=0; i<n; i++) {
+        size += strlen(array[i]);
+        // printf("Size: %d \n", size);
+    }
+
+    char *result = (char *) malloc(size*sizeof(char) + 1);
+    char *dest = result;
+
+    for (i=0; i<n; i++) {
+        strcpy (dest, array[i]);
+        dest += strlen(array[i]);
+        // printf("Result [%d]: %s \n", i, result);
+    }
+
+    return result;
 }
 
 
