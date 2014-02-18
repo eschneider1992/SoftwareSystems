@@ -83,12 +83,12 @@ def closed_loop( c, p, tm=5000 ):
     """
     def setpoint( t ):
         ## Sloped line
-        # return t/10
+        return t/10
         ## OR
         ## Step function
-        if t < 100: return 0
-        if t < 300: return 50
-        return 10
+        # if t < 100: return 0
+        # if t < 300: return 50
+        # return 10
     
     y = 0
     res = []
