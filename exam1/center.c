@@ -18,8 +18,23 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 char *center(char *s, int n, char fillchar)
 {
-    // FILL THIS IN
-    //    return NULL;
+    int size = n+1;
+    char *target = malloc(size * sizeof(char));
+    int s_len = strlen(s);
+    int offset_index = (n - 1 - s_len)/2;
+        // printf("n: %d , s_len: %d , offset_index: %d \n", n, s_len, offset_index); // Debug
+
+    int i;
+    for (i=0; i<n; i++) {
+        if ((i > offset_index) && (i<=(offset_index+s_len))) {
+            target[i] = *(s+i-offset_index-1);
+        } else {
+            target[i] = fillchar;
+        }
+    }
+    target[n] = '\0';
+
+    return target;
 }
 
 

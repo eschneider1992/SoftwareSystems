@@ -24,7 +24,7 @@ char tracks[][80] = {
 // Finds all tracks that contain the given string.
 //
 // Prints track number and title of matching tracks
-void find_track(char search_for[])
+void find_track(char *search_for)
 {
   int i;
   for (i=0; i<NUM_TRACKS; i++) {
