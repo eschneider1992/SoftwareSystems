@@ -28,58 +28,114 @@ void find_track(char *search_for)
 {
   int i;
   for (i=0; i<NUM_TRACKS; i++) {
-     if (strstr(tracks[i], search_for)) {
-       printf("Track %i: '%s'\n", i, tracks[i]);
+   if (strstr(tracks[i], search_for)) {
+     printf("Track %i: '%s'\n", i, tracks[i]);
    }
-}
+ }
 }
 
 // Finds all tracks that match the given pattern.
 //
 // Prints track number and title of matching tracks
+// void find_track_regex(char *pattern)
+// {
+//    regex_t regex;
+//    int reti;
+//    int i;
+//    char msgbuf[100];
+
+// /* Compile the regular expression for later comparison with regexec */
+//    reti = regcomp(&regex, pattern, 0);
+//    if( reti ){ fprintf(stderr, "Could not compile regex\n"); exit(1); }
+
+//    for (i=0; i<NUM_TRACKS; i++) {
+//      reti = regexec(&regex, tracks[i], 0, NULL, 0);
+//      if( !reti )
+//         printf("Track %d matches the %s pattern: %s \n", i+1, pattern, tracks[i]);
+// }
+// regfree(&regex);
+
+// }
+
+
+
 void find_track_regex(char *pattern)
 {
-   regex_t regex;
-   int reti;
-   int i;
-   char msgbuf[100];
+  int i;
+  int ret;
+  regex_t regex;
+  char *msgbuf;
 
-/* Compile the regular expression for later comparison with regexec */
-   reti = regcomp(&regex, pattern, 0);
-   if( reti ){ fprintf(stderr, "Could not compile regex\n"); exit(1); }
+  ret = regcomp(&regex, pattern, REG_EXTENDED | REG_NOSUB);
+  if (ret) {
+    fprintf(stderr, "Could not compile regex\n");
+    exit(1);
+  }
 
-   for (i=0; i<NUM_TRACKS; i++) {
-     reti = regexec(&regex, tracks[i], 0, NULL, 0);
-     if( !reti )
-        printf("Track %d matches the %s pattern: %s \n", i+1, pattern, tracks[i]);
-}
-regfree(&regex);
-
-}
-
-// Truncates the string at the first newline, if there is one.
-void rstrip(char s[])
-{
-  char *ptr = strchr(s, '\n');
-  if (ptr) {
-     *ptr = '\0';
+  for (i=0; i<NUM_TRACKS; i++) {
+    ret = regexec(&regex, tracks[i], 0, NULL, 0);
+    if (!ret) {
+     printf("Track %i: '%s'\n", i, tracks[i]);
+   } else if (ret == REG_NOMATCH) {
+     continue;
+   } else {
+     regerror(ret, &regex, msgbuf, sizeof(msgbuf));
+     fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+     exit(1);
+   }
  }
+
+  /* I'm not sure this is necessary, but it's possible that if you
+       let regex go out of scope without running regfree, it leaks
+       (that is, leaves some allocated memory unfreed). */
+  regfree(&regex);
 }
+
+
+
+
+// // Truncates the string at the first newline, if there is one.
+//      void rstrip(char s[])
+//      {
+//       char *ptr = strchr(s, '\n');
+//       if (ptr) {
+//        *ptr = '\0';
+//      }
+//    }
+
+//    int main (int argc, char *argv[])
+//    {
+//     char search_for[80];
+
+//     /* take input from the user and search */
+//     printf("Search for: ");
+//     fgets(search_for, 80, stdin);
+//     rstrip(search_for);
+
+//     find_track(search_for);
+//     find_track_regex(search_for);
+
+//     return 0;
+//   }
+
+
+
+
 
 int main (int argc, char *argv[])
 {
-  char search_for[80];
+    char *target = "F";
+    char *pattern = "Fr.*Fr.*";
 
-    /* take input from the user and search */
-  printf("Search for: ");
-  fgets(search_for, 80, stdin);
-  rstrip(search_for);
+    find_track(target);
+    find_track_regex(pattern);
 
-  find_track(search_for);
-  find_track_regex(search_for);
-
-  return 0;
+    return 0;
 }
+
+
+
+
 
 /*
     Usful sites for understanding regex
