@@ -49,8 +49,8 @@ void find_track_regex(char *pattern)
    if( reti ){ fprintf(stderr, "Could not compile regex\n"); exit(1); }
 
    for (i=0; i<NUM_TRACKS; i++) {
-       reti = regexec(&regex, tracks[i], 0, NULL, 0);
-      if( !reti )
+     reti = regexec(&regex, tracks[i], 0, NULL, 0);
+     if( !reti )
         printf("Track %d matches the %s pattern: %s \n", i+1, pattern, tracks[i]);
 }
 regfree(&regex);

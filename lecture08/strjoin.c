@@ -30,7 +30,9 @@ char *strjoin(char *array[], int n)
         // printf("Size: %d \n", size);
     }
 
-    char *result = (char *) malloc(size*sizeof(char) + 1);
+    char *result = (char *) malloc(size*sizeof(char)+1);
+    char *derp = malloc(6*sizeof(char));
+    derp = "abcde";
     char *dest = result;
 
     for (i=0; i<n; i++) {
@@ -38,6 +40,8 @@ char *strjoin(char *array[], int n)
         dest += strlen(array[i]);
         // printf("Result [%d]: %s \n", i, result);
     }
+
+    printf("Derp: %s \n", derp);
 
     return result;
 }
