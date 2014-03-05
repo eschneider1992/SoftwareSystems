@@ -40,12 +40,12 @@ double time_func(int iters, float (*func)())
 
 #include "rand.c"
 
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   int i;
   float f;
   double t0, t1;
-  int iters = 1000000000;
+  int iters = 50000000;
   int seed = 17;
 
   srandom (seed);
@@ -90,8 +90,7 @@ main (int argc, char *argv[])
     f = my_random_float();
   }
   t1 = get_seconds();
-  printf ("mine \t %f ms\n", t1 - t0);
-   
+  printf ("mine \t %f ms\n", t1 - t0);   
 
   srandom (seed);
   t0 = get_seconds();
@@ -101,6 +100,23 @@ main (int argc, char *argv[])
   t1 = get_seconds();
   printf ("mine \t %f ms\n", t1 - t0);
     
+
+  srandom (seed);
+  t0 = get_seconds();
+  for (i=0; i<iters; i++) {
+    f = my_random_double();
+  }
+  t1 = get_seconds();
+  printf ("Eric's \t %f ms\n", t1 - t0);   
+
+  srandom (seed);
+  t0 = get_seconds();
+  for (i=0; i<iters; i++) {
+    f = my_random_double();
+  }
+  t1 = get_seconds();
+  printf ("Eric's \t %f ms\n", t1 - t0);
+
 
   srandom (seed);
   t0 = get_seconds();
@@ -118,4 +134,6 @@ main (int argc, char *argv[])
   }
   t1 = get_seconds();
   printf ("theirs \t %f ms\n", t1 - t0);    
+
+  return 0;
 }
