@@ -94,14 +94,13 @@ float my_random_float2()
 double my_random_double()
 {
   uint64_t x;
-
-  int mant;
-          int exp = 1022;
-  int mask = 1;
+  uint64_t mant;
+  uint64_t exp = 1022;
+  uint64_t mask = 1;
 
   union {
-    float f;
-    int i;
+    double d;
+    uint64_t i;
   } b;
 
   // generate random bits until we see the first set bit
@@ -123,8 +122,7 @@ double my_random_double()
           // use the remaining bit as the mantissa
           mant = x >> 11;
           b.i = (exp << 52) | mant;
-
-  return b.f;
+  return b.d;
 }
 
 // return a constant (this is a dummy function for time trials)
