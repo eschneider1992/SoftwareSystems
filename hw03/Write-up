@@ -1,0 +1,43 @@
+SoftSys HW03
+Eric Schneider
+
+
+
+1) Read this paper (which I will also discuss in class):
+	http://allendowney.com/research/rand/downey07randfloat.pdf
+
+
+
+2) If you run git pull upstream master, you should get a directory named hw03 that contains rand.c and a Makefile.  Read over rand.c and test_rand.c, then compile and run test_rand.c.  Which implementation is fastest?
+	Allen's implentation of a random float generator is about 12% slower than the standard C definition of a random float.
+
+	RESULTS
+	dummy 	 136.000000 ms
+	dummy 	 120.000000 ms
+	dummy2 	 684.000000 ms
+	dummy2 	 692.000000 ms
+	mine 	 772.000000 ms
+	mine 	 784.000000 ms
+	mine2 	 1324.000000 ms
+	mine2 	 1308.000000 ms
+	theirs 	 684.000000 ms
+	theirs 	 684.000000 ms
+
+
+
+3) Modify test_rand.c to test my_random_float2.  Which implementation of my algorithm is faster?
+	my_random_float, which includes inline assembly code, is almost twice as fast as my_random_float2, which uses plain C. See RESULTS above.
+
+
+
+4) Fill in the body of my_random_double and test it to see if it returns numbers uniformly distributed from 0 to 1.  Code do that is shown in hw03.  test_rand2.c prints 1000 random numbers, which you can redirect into a file.  check_uniform.py reads the file and plots the cumulative distribution function (CDF) of the values.  For a uniform distribution, the CDF should be a straight line.
+	I tested the uniformity of my_random_double and found it to be uniform (hooray!). The proof of the test can be seen in testing_uniformity_my_random_double.png inside of the hw03 folder. Sorry, the axes aren't labeled.
+
+
+5) Modify test_rand.c to compare my_random_double and random_double.  Which is faster?
+	The my_random_double algorithm is much slower than their current double standard, which could probably be mitigated by inling assembly code as found in my_random_float.
+
+	Eric's 	 2024.000000 ms
+	Eric's 	 2032.000000 ms
+	Their double 	 772.000000 ms
+	Their double 	 776.000000 ms
