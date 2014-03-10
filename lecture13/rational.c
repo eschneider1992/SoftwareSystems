@@ -12,20 +12,23 @@ typedef struct {
 // Returns a new Rational with the given numer and denom.
 // If unable to allocate, prints an error message and exits.
 Rational *make_rational(int numer, int denom) {
-    // FILL THIS IN
-    return NULL;
+    Rational *newRational = malloc(sizeof(Rational));
+    newRational->numer = numer;
+    newRational->denom = denom;
+    return newRational;
 }
 
 // Computes a floating-point approximation of a Rational.
 double rational_to_double(Rational *rational) {
-    // FILL THIS IN
-    return 0.0;
+    return ((float)(rational->numer)) / (rational->denom);
 }
 
 // Multiplies two rational numbers; returns a new Rational.
 Rational *mult_rational(Rational *r1, Rational *r2) {
-    // FILL THIS IN
-    return NULL;
+    Rational *newRational = malloc(sizeof(Rational));
+    newRational->numer = (r1->numer)*(r2->numer);
+    newRational->denom = (r1->denom)*(r2->denom);
+    return newRational;
 }
 
 // Frees a Rational.
