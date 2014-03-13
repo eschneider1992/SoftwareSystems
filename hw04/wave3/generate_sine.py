@@ -11,17 +11,10 @@ import thinkplot
 import matplotlib.pyplot as pyplot
 
 
-def print_reverse_tables():
-    print 'int reverse1[] = {'
-    for i in range(64):
-        s = bin(i)[2:].zfill(6)
-        print '%d,' % int(s[::-1], 2),
-    print '};'
-
-    print 'int reverse2[] = {'
-    for i in [0, 2, 1, 3]:
-        print '%d,' % (i * 64),
-    print '};'
+def print_reverse_tables(intA):
+    print 'int reverseWave[] = {'
+    for n in intA:
+        print '%d,' % int('{:08b}'.format(n)[::-1], 2),
 
 
 def print_c_wave(wave, name='wave1'):
@@ -31,7 +24,7 @@ def print_c_wave(wave, name='wave1'):
     t = [str(z) for z in zs]
     print ','.join(t)
     print '};'
-
+    print_reverse_tables(zs);
 
 def make_sine():
 
@@ -48,8 +41,8 @@ def make_sine():
     #thinkplot.Show(
     #    xlabel='time (s)',
     #    axis=[0, duration, -1.05, 1.05])
-
-    print_c_wave(wave)
+    
+    print_c_wave(wave, 'signal')
 
 
 def file_example(start=0.1, duration=0.6):
