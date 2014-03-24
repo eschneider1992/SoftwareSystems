@@ -1227,64 +1227,87 @@ def mag(a):
     return numpy.sqrt(numpy.dot(a, a))
 
 
+def print_reverse_tables(intA):
+    print 'int reverseWave[] = {'
+    # for n in intA:
+    for i in range(500):
+        try:
+            print '%d,' % int('{:08b}'.format(intA[i])[::-1], 2),
+        except Exception, e:
+            1+1
+    print '};'
+
+
+def print_c_wave(wave, name='wave1'):
+    print 'int %s[] = {' % name
+    ys = 0.7 + (4.3) * (wave.ys + 1) / 2
+    zs = [int(y * 256 / 5) for y in ys]
+    t = [str(z) for z in zs]
+    print ','.join(t)
+    print '};'
+    print_reverse_tables(zs);
+
+
 def main():
 
-    cos_basis = cos_wave(440)
-    sin_basis = sin_wave(440)
+    print_c_wave(read_wave('woman.wav'), 'signal')
 
-    wave = cos_wave(440, offset=math.pi/2)
-    cos_cov = cos_basis.cov(wave)
-    sin_cov = sin_basis.cov(wave)
-    print cos_cov, sin_cov, mag((cos_cov, sin_cov))
-    return
+    # cos_basis = cos_wave(440)
+    # sin_basis = sin_wave(440)
 
-    wfile = WavFileWriter()
-    for sig_cons in [SinSignal, TriangleSignal, SawtoothSignal, 
-                     GlottalSignal, ParabolicSignal, SquareSignal]:
-        print sig_cons
-        sig = sig_cons(440)
-        wave = sig.make_wave(1)
-        wave.apodize()
-        wfile.write(wave)
-    wfile.close()
-    return
+    # wave = cos_wave(440, offset=math.pi/2)
+    # cos_cov = cos_basis.cov(wave)
+    # sin_cov = sin_basis.cov(wave)
+    # print cos_cov, sin_cov, mag((cos_cov, sin_cov))
+    # return
 
-    signal = GlottalSignal(440)
-    signal.plot()
-    pyplot.show()
-    return
+    # wfile = WavFileWriter()
+    # for sig_cons in [SinSignal, TriangleSignal, SawtoothSignal, 
+    #                  GlottalSignal, ParabolicSignal, SquareSignal]:
+    #     print sig_cons
+    #     sig = sig_cons(440)
+    #     wave = sig.make_wave(1)
+    #     wave.apodize()
+    #     wfile.write(wave)
+    # wfile.close()
+    # return
 
-    wfile = WavFileWriter()
-    for m in range(60, 0, -1):
-        wfile.write(make_note(m, 0.25))
-    wfile.close()
-    return
+    # signal = GlottalSignal(440)
+    # signal.plot()
+    # pyplot.show()
+    # return
 
-    wave1 = make_note(69, 1)
-    wave2 = make_chord([69, 72, 76], 1)
-    wave = wave1 | wave2
+    # wfile = WavFileWriter()
+    # for m in range(60, 0, -1):
+    #     wfile.write(make_note(m, 0.25))
+    # wfile.close()
+    # return
 
-    wfile = WavFileWriter()
-    wfile.write(wave)
-    wfile.close()
-    return
+    # wave1 = make_note(69, 1)
+    # wave2 = make_chord([69, 72, 76], 1)
+    # wave = wave1 | wave2
 
-    sig1 = CosSignal(freq=440)
-    sig2 = CosSignal(freq=523.25)
-    sig3 = CosSignal(freq=660)
-    sig4 = CosSignal(freq=880)
-    sig5 = CosSignal(freq=987)
-    sig = sig1 + sig2 + sig3 + sig4
+    # wfile = WavFileWriter()
+    # wfile.write(wave)
+    # wfile.close()
+    # return
 
-    #wave = Wave(sig, duration=0.02)
-    #wave.plot()
+    # sig1 = CosSignal(freq=440)
+    # sig2 = CosSignal(freq=523.25)
+    # sig3 = CosSignal(freq=660)
+    # sig4 = CosSignal(freq=880)
+    # sig5 = CosSignal(freq=987)
+    # sig = sig1 + sig2 + sig3 + sig4
 
-    wave = sig.make_wave(duration=1)
-    #wave.normalize()
+    # #wave = Wave(sig, duration=0.02)
+    # #wave.plot()
 
-    wfile = WavFileWriter(wave)
-    wfile.write()
-    wfile.close()
+    # wave = sig.make_wave(duration=1)
+    # #wave.normalize()
+
+    # wfile = WavFileWriter(wave)
+    # wfile.write()
+    # wfile.close()
 
 
 if __name__ == '__main__':

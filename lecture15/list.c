@@ -12,7 +12,7 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 typedef struct node {
     int val;
-    struct node * next;
+    struct node *next;
 } Node;
 
 Node *make_node(int val, Node *next) {
@@ -49,19 +49,46 @@ int pop(Node **head) {
 
 // Add a new element to the beginning of the list.
 void push(Node **head, int val) {
-    // FILL THIS IN!
+    *head = make_node(val, *head);
 }
 
 // Remove the first element with the given value; return the number
 // of nodes removed.
 int remove_by_value(Node **head, int val) {
-    // FILL THIS IN!
+    Node *current = *head;
+    Node *last = NULL;
+
+    if ((*head)->val == val) {
+        *head = (*head)->next;
+        free(current);
+        return 1;
+    }
+    while (current != NULL) {
+        if (current->val == val) {
+            last->next = current->next;
+            free(current);
+            return 1;
+        }
+        last = current;
+        current = current->next;
+    }
     return 0;
 }
 
 // Reverse the elements of the list without allocating new nodes.
 void reverse(Node **head) {
-    // FILL THIS IN!
+    Node *top = NULL;
+    Node *middle = *head;
+    Node *bottom = (*head)->next;
+
+    while (middle != NULL) {
+        middle->next = top;
+        top = middle;
+        middle = bottom;
+        if (bottom != NULL)
+            bottom = bottom->next;
+    }
+    *head = top;
 }
 
 
@@ -74,10 +101,10 @@ int main() {
     int retval = pop(&test_list);
     push(&test_list, retval+10);
 
-    remove_by_value(&test_list, 3);
-    remove_by_value(&test_list, 7);
+    printf("I removed so many: %d\n", remove_by_value(&test_list, 3));
+    printf("I removed so many: %d\n", remove_by_value(&test_list, 7));
+    print_list(test_list);
 
     reverse(&test_list);
-
     print_list(test_list);
 }

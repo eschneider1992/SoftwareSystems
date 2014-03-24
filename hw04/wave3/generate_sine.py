@@ -12,9 +12,13 @@ import matplotlib.pyplot as pyplot
 
 
 def print_reverse_tables(intA):
-    print 'int reverseWave[] = {'
+    f = open('signal', 'w')
+    f.write('int reverseWave[] = {')
     for n in intA:
-        print '%d,' % int('{:08b}'.format(n)[::-1], 2),
+        f.write('%d,' % int('{:08b}'.format(n)[::-1], 2),)
+    print '\n'
+    # for i in range(200):
+    #         print '%d,' % int('{:08b}'.format(intA)[i][::-1], 2),
 
 
 def print_c_wave(wave, name='wave1'):
@@ -45,11 +49,11 @@ def make_sine():
     print_c_wave(wave, 'signal')
 
 
-def file_example(start=0.1, duration=0.6):
+def file_example(start=0.0, duration=2.75):
     """Demonstrates methods in the thinkdsp module.
     """
     # read the file recording
-    wave = thinkdsp.read_wave('51743__erkanozan__applause.wav')
+    wave = thinkdsp.read_wave('woman.wav')
 
     # extract a segment
     segment = wave.segment(start, duration)
@@ -68,6 +72,8 @@ def file_example(start=0.1, duration=0.6):
     filtered.apodize()
     segment.apodize()
 
+    print_c_wave(filtered)
+
     # write the original and filtered segments to a file
     filename = 'filtered.wav'
     wfile = thinkdsp.WavFileWriter(filename, segment.framerate)
@@ -79,8 +85,8 @@ def file_example(start=0.1, duration=0.6):
 
 
 def main():
-    make_sine()
-    # file_example()
+    # make_sine()
+    file_example()
 
 
 if __name__ == '__main__':
