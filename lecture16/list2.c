@@ -62,23 +62,23 @@ int remove_by_value(Node **head, int val) {
     Node *victim;
 
     if (node == NULL) {
-	return 0;
-    }
+     return 0;
+ }
 
-    if (node->val == val) {
-	pop(head);
-	return 1;
-    }
+ if (node->val == val) {
+     pop(head);
+     return 1;
+ }
 
-    for(; node->next != NULL; node = node->next) {
-	if (node->next->val == val) {
-	    victim = node->next;
-	    node->next = victim->next;
-	    free(victim);
-	    return 1;
-	}
-    }
-    return 0;
+ for(; node->next != NULL; node = node->next) {
+     if (node->next->val == val) {
+         victim = node->next;
+         node->next = victim->next;
+         free(victim);
+         return 1;
+     }
+ }
+ return 0;
 }
 
 // Reverse the elements of the list without allocating new nodes.
@@ -87,19 +87,19 @@ void reverse(Node **head) {
     Node *next, *temp;
 
     if (node == NULL || node->next == NULL) {
-	return;
-    }
+     return;
+ }
 
-    next = node->next;
-    node->next = NULL;
+ next = node->next;
+ node->next = NULL;
 
-    while (next != NULL) {
-	temp = next->next;
-	next->next = node;
-	node = next;
-	next = temp;
-    }
-    *head = node;
+ while (next != NULL) {
+     temp = next->next;
+     next->next = node;
+     node = next;
+     next = temp;
+ }
+ *head = node;
 }
 
 // Adds a new element to the list before the indexed element.
@@ -107,8 +107,23 @@ void reverse(Node **head) {
 // element between the first and second elements.
 // Returns 0 if successful, -1 if the index is out of range.
 int insert_by_index(Node **head, int val, int index) {
-    // FILL THIS IN
-    return -1;
+    Node *current = *head;
+    int i;
+    if (index == 0) {
+        *head = make_node(val, *head);
+    }
+    else if (index == 1) {
+        if ((current==NULL) || (current->next==NULL)) return -1;
+        current->next = make_node(val, current->next); // I added this case because I wasn't sure if C runs a loop once if the case starts out false
+    }
+    else {
+        for (i = 0; i<(index-1); i++){
+            if (current->next == NULL) return -1;
+            current = current->next;
+        }
+        current->next = make_node(val, current->next);
+    }
+    return 0;
 }
 
 // Makes a mysterious data structure.
@@ -129,7 +144,6 @@ int main() {
     Node *test_list = make_node(2, NULL);
     test_list->next = make_node(4, NULL);
     test_list->next->next = make_node(6, NULL);
-
     // insert the odd numbers
     insert_by_index(&test_list, 1, 0);
     insert_by_index(&test_list, 3, 2);
