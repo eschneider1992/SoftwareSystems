@@ -98,7 +98,18 @@ void mult_matrix(Matrix *A, Matrix *B, Matrix *C) {
 
 // Performs matrix multiplication and returns a new matrix.
 Matrix *mult_matrix_func(Matrix *A, Matrix *B) {
-    // Fill this in
+    assert(A->cols == B->rows);
+    Matrix *C = make_matrix(A->rows, B->cols);
+
+    int i, j, k, sum = 0;
+    for (i = 0; i<B->cols; i++) {
+        for (j = 0; j<A->rows; j++) {
+            for (k = 0; k<A->cols; k++) {
+                sum += A->data[j][k] * B->data[k][i];
+            }
+            C->data[j][i] = sum;
+        }
+    }
     return NULL;
 }
 
@@ -110,16 +121,21 @@ int main() {
     printf("A\n");
     print_matrix(A);
 
-    // Matrix *C = add_matrix_func(A, A);
-    // printf("A + A\n");
-    // print_matrix(C);
+    Matrix *C = add_matrix_func(A, A);
+    printf("A + A\n");
+    print_matrix(C);
 
-    // Matrix *B = make_matrix(4, 3);
-    // increment_matrix(B, 1);
-    // printf("B\n");
-    // print_matrix(B);
+    Matrix *B = make_matrix(4, 3);
+    increment_matrix(B, 2);
+    printf("B\n");
+    print_matrix(B);
 
-    // Matrix *D = mult_matrix_func(A, B);
-    // printf("D\n");
-    // print_matrix(D);
+    Matrix *D = mult_matrix_func(A, B);
+    printf("D\n");
+    print_matrix(D);
+
+    // matrix_free(A);
+    // matrix_free(B);
+    // matrix_free(C);
+    // matrix_free(D);
 }
