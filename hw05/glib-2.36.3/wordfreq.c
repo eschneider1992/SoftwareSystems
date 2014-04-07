@@ -81,8 +81,8 @@ void add_word_to_table(GHashTable *htable, GString *strbuf) {
 	}
 }
 
-void print_key_val (gpointer data, gpointer user_data){
-    key = (gchar *) data;
+void print_key_val (gpointer data1, gpointer data2){
+    key = (gchar *) data1;
 	val = (guint*) g_hash_table_lookup(htable, key);
 	g_printf("%d\t%s \n", *val, key);
 }

@@ -1,0 +1,83 @@
+The homework for the Pintos section of HW05 was to modify the timer_sleep() function so that instead of going into a loop and wasting compute time it would instead go to sleep and get woken up by the timer_interupt at the specified time.
+
+The players of interest are:
+
+thread object
+	This is somewhat like a class that contains the state and functions that define a thread. Examples of thread state variables include a 'state' enum, a uint_8 stack pointer, and an integer that denotes priority. Example functions include thread_init(), thread_yield(), and thread_set_priority(). I edited the definition for a thread so that it included a ticks_to_sleep variable.
+		thread.h and thread.c can be found in pintos/src/threads
+
+timer_interrupt
+	Timer interrupt is a very small function that runs every clock tick. Interrupts have to be turned off in order for this function to be called. The tick counter is incremented for the entire OS. I added a small function in here to check threads that were blocking and check the blocked ones to see if they'd blocked for long enough.
+		timer_interrupt is a function inside of pintos/src/devices/timer.c
+
+timer_sleep
+	This is a function that gets called with a number of ticks to sleep.
+		timer_sleep is a function inside of pintos/src/devices/timer.c
+
+
+
+
+CODE SNIPPETS
+-----------------------------------------------------------------------------------------
+Inside of thread.h I added the starred variable ticks_to_sleep to the thread struct
+
+struct thread
+  {
+    /* Owned by thread.c. */
+    tid_t tid;                          /* Thread identifier. */
+    enum thread_status status;          /* Thread state. */
+    char name[16];                      /* Name (for debugging purposes). */
+    uint8_t *stack;                     /* Saved stack pointer. */
+    int priority;                       /* Priority. */
+    struct list_elem allelem;           /* List element for all threads list. */
+
+    /* Shared between thread.c and synch.c. */
+    struct list_elem elem;              /* List element. */
+ ***** int64_t ticks_to_sleep;             /* ticks to sleep */
+  }
+
+-----------------------------------------------------------------------------------------
+Based on an internet tutorial I modified timer_sleep to set the ticks_to_sleep variable and block the thread
+
+void
+  timer_sleep (int64_t ticks)
+  {
+    ASSERT (intr_get_level () == INTR_ON);
+
+   		// sets the ticks_to_sleep variable that we just added in thread.h
+    thread_current()->ticks_to_sleep = ticks;
+   		// disables interupts and saves the old state
+    enum intr_level old_level = intr_disable();
+   		// block current thread
+    thread_block();
+   		// set the interrupts to the old levels
+    intr_set_level(old_level);
+  }
+
+-----------------------------------------------------------------------------------------
+Inside of timer_interrupt I added a wake_threads function that checks each thread and sees if it should be woken
+
+static void
+  timer_interrupt (struct intr_frame *args UNUSED)
+  {
+    ticks++;
+    thread_tick ();
+  /* wake_threads gets called on every thread, once a tick. It wakes those that
+  are blocked but have reached the end of their sleep time*/
+    thread_foreach(wake_threads, 0);
+  }
+
+-----------------------------------------------------------------------------------------
+I made a wake_threads function that wakes a thread if it is blocked and it ticks_to_sleep is 0
+
+static void
+	wake_threads(struct thread *t, void *aux) {
+	  if(t->status == THREAD_BLOCKED) {
+	    if(t->ticks_to_sleep > 0) {
+	      t->ticks_to_sleep--;
+	      if(t->ticks_to_sleep == 0) {
+	        thread_unblock(t);
+	      }
+	    }
+	  }
+	}
