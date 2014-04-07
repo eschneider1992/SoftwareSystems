@@ -1,0 +1,17 @@
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/bin/pod2man
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/bin/pod2text
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/Man.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/ParseLink.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/Text.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/Text/Color.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/Text/Overstrike.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Pod/Text/Termcap.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man1/perlpodstyle.1
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man1/pod2man.1
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man1/pod2text.1
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::Man.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::ParseLink.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::Text.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::Text::Color.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::Text::Overstrike.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Pod::Text::Termcap.3

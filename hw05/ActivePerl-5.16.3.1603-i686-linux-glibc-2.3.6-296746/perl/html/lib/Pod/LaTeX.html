@@ -1,0 +1,283 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../displayToc.js"></script>
+<script language="JavaScript" src="../../tocParas.js"></script>
+<script language="JavaScript" src="../../tocTab.js"></script>
+<title></title>
+<link rel="stylesheet" href="../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OBJECT-METHODS">OBJECT METHODS</a>
+    <ul>
+      <li><a href="#Data-Accessors">Data Accessors</a></li>
+    </ul>
+  </li>
+  <li><a href="#NOTES">NOTES</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Pod::LaTeX - Convert Pod data to formatted Latex</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code><code>  use Pod::LaTeX;
+  my $parser = Pod::LaTeX-&gt;new ( );
+
+  $parser-&gt;parse_from_filehandle;
+
+  $parser-&gt;parse_from_file (&#39;file.pod&#39;, &#39;file.tex&#39;);</code></code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><code><code>Pod::LaTeX</code></code> is a module to convert documentation in the Pod format into Latex. The <a href="../../bin/pod2latex.html"><b>pod2latex</b></a>  command uses this module for translation.</p>
+
+<p><code><code>Pod::LaTeX</code></code> is a derived class from <a href="../../lib/Pod/Select.html">Pod::Select</a>.</p>
+
+<h1 id="OBJECT-METHODS">OBJECT METHODS</h1>
+
+<p>The following methods are provided in this module. Methods inherited from <code><code>Pod::Select</code></code> are not described in the public interface.</p>
+
+<ul>
+
+</ul>
+
+<h2 id="Data-Accessors">Data Accessors</h2>
+
+<p>The following methods are provided for accessing instance data. These methods should be used for accessing configuration parameters rather than assuming the object is a hash.</p>
+
+<p>Default values can be supplied by using these names as keys to a hash of arguments when using the <code><code>new()</code></code> constructor.</p>
+
+<dl>
+
+<dt id="AddPreamble"><b>AddPreamble</b></dt>
+<dd>
+
+<p>Logical to control whether a <code><code>latex</code></code> preamble is to be written. If true, a valid <code><code>latex</code></code> preamble is written before the pod data is written. This is similar to:</p>
+
+<pre><code><code>  \documentclass{article}
+  \usepackage[T1]{fontenc}
+  \usepackage{textcomp}
+  \begin{document}</code></code></pre>
+
+<p>but will be more complicated if table of contents and indexing are required. Can be used to set or retrieve the current value.</p>
+
+<pre><code><code>  $add = $parser-&gt;AddPreamble();
+  $parser-&gt;AddPreamble(1);</code></code></pre>
+
+<p>If used in conjunction with <code><code>AddPostamble</code></code> a full latex document will be written that could be immediately processed by <code><code>latex</code></code>.</p>
+
+<p>For some pod escapes it may be necessary to include the amsmath package. This is not yet added to the preamble automatically.</p>
+
+</dd>
+<dt id="AddPostamble"><b>AddPostamble</b></dt>
+<dd>
+
+<p>Logical to control whether a standard <code><code>latex</code></code> ending is written to the output file after the document has been processed. In its simplest form this is simply:</p>
+
+<pre><code><code>  \end{document}</code></code></pre>
+
+<p>but can be more complicated if a index is required. Can be used to set or retrieve the current value.</p>
+
+<pre><code><code>  $add = $parser-&gt;AddPostamble();
+  $parser-&gt;AddPostamble(1);</code></code></pre>
+
+<p>If used in conjunction with <code><code>AddPreaamble</code></code> a full latex document will be written that could be immediately processed by <code><code>latex</code></code>.</p>
+
+</dd>
+<dt id="Head1Level"><b>Head1Level</b></dt>
+<dd>
+
+<p>The <code><code>latex</code></code> sectioning level that should be used to correspond to a pod <code><code>=head1</code></code> directive. This can be used, for example, to turn a <code><code>=head1</code></code> into a <code><code>latex</code></code> <code><code>subsection</code></code>. This should hold a number corresponding to the required position in an array containing the following elements:</p>
+
+<pre><code><code> [0] chapter
+ [1] section
+ [2] subsection
+ [3] subsubsection
+ [4] paragraph
+ [5] subparagraph</code></code></pre>
+
+<p>Can be used to set or retrieve the current value:</p>
+
+<pre><code><code>  $parser-&gt;Head1Level(2);
+  $sect = $parser-&gt;Head1Level;</code></code></pre>
+
+<p>Setting this number too high can result in sections that may not be reproducible in the expected way. For example, setting this to 4 would imply that <code><code>=head3</code></code> do not have a corresponding <code><code>latex</code></code> section (<code><code>=head1</code></code> would correspond to a <code><code>paragraph</code></code>).</p>
+
+<p>A check is made to ensure that the supplied value is an integer in the range 0 to 5.</p>
+
+<p>Default is for a value of 1 (i.e. a <code><code>section</code></code>).</p>
+
+</dd>
+<dt id="Label"><b>Label</b></dt>
+<dd>
+
+<p>This is the label that is prefixed to all <code><code>latex</code></code> label and index entries to make them unique. In general, pods have similarly titled sections (NAME, DESCRIPTION etc) and a <code><code>latex</code></code> label will be multiply defined if more than one pod document is to be included in a single <code><code>latex</code></code> file. To overcome this, this label is prefixed to a label whenever a label is required (joined with an underscore) or to an index entry (joined by an exclamation mark which is the normal index separator). For example, <code><code>\label{text}</code></code> becomes <code><code>\label{Label_text}</code></code>.</p>
+
+<p>Can be used to set or retrieve the current value:</p>
+
+<pre><code><code>  $label = $parser-&gt;Label;
+  $parser-&gt;Label($label);</code></code></pre>
+
+<p>This label is only used if <code><code>UniqueLabels</code></code> is true. Its value is set automatically from the <code><code>NAME</code></code> field if <code><code>ReplaceNAMEwithSection</code></code> is true. If this is not the case it must be set manually before starting the parse.</p>
+
+<p>Default value is <code><code>undef</code></code>.</p>
+
+</dd>
+<dt id="LevelNoNum"><b>LevelNoNum</b></dt>
+<dd>
+
+<p>Control the point at which <code><code>latex</code></code> section numbering is turned off. For example, this can be used to make sure that <code><code>latex</code></code> sections are numbered but subsections are not.</p>
+
+<p>Can be used to set or retrieve the current value:</p>
+
+<pre><code><code>  $lev = $parser-&gt;LevelNoNum;
+  $parser-&gt;LevelNoNum(2);</code></code></pre>
+
+<p>The argument must be an integer between 0 and 5 and is the same as the number described in <code><code>Head1Level</code></code> method description. The number has nothing to do with the pod heading number, only the <code><code>latex</code></code> sectioning.</p>
+
+<p>Default is 2. (i.e. <code><code>latex</code></code> subsections are written as <code><code>subsection*</code></code> but sections are numbered).</p>
+
+</dd>
+<dt id="MakeIndex"><b>MakeIndex</b></dt>
+<dd>
+
+<p>Controls whether <code><code>latex</code></code> commands for creating an index are to be inserted into the preamble and postamble</p>
+
+<pre><code><code>  $makeindex = $parser-&gt;MakeIndex;
+  $parser-&gt;MakeIndex(0);</code></code></pre>
+
+<p>Irrelevant if both <code><code>AddPreamble</code></code> and <code><code>AddPostamble</code></code> are false (or equivalently, <code><code>UserPreamble</code></code> and <code><code>UserPostamble</code></code> are set).</p>
+
+<p>Default is for an index to be created.</p>
+
+</dd>
+<dt id="ReplaceNAMEwithSection"><b>ReplaceNAMEwithSection</b></dt>
+<dd>
+
+<p>This controls whether the <code><code>NAME</code></code> section in the pod is to be translated literally or converted to a slightly modified output where the section name is the pod name rather than &quot;NAME&quot;.</p>
+
+<p>If true, the pod segment</p>
+
+<pre><code><code>  =head1 NAME
+
+  pod::name - purpose
+
+  =head1 SYNOPSIS</code></code></pre>
+
+<p>is converted to the <code><code>latex</code></code></p>
+
+<pre><code><code>  \section{pod::name\label{pod_name}\index{pod::name}}
+
+  Purpose
+
+  \subsection*{SYNOPSIS\label{pod_name_SYNOPSIS}%
+               \index{pod::name!SYNOPSIS}}</code></code></pre>
+
+<p>(dependent on the value of <code><code>Head1Level</code></code> and <code><code>LevelNoNum</code></code>). Note that subsequent <code><code>head1</code></code> directives translate to subsections rather than sections and that the labels and index now include the pod name (dependent on the value of <code><code>UniqueLabels</code></code>).</p>
+
+<p>The <code><code>Label</code></code> is set from the pod name regardless of any current value of <code><code>Label</code></code>.</p>
+
+<pre><code><code>  $mod = $parser-&gt;ReplaceNAMEwithSection;
+  $parser-&gt;ReplaceNAMEwithSection(0);</code></code></pre>
+
+<p>Default is to translate the pod literally.</p>
+
+</dd>
+<dt id="StartWithNewPage"><b>StartWithNewPage</b></dt>
+<dd>
+
+<p>If true, each pod translation will begin with a <code><code>latex</code></code> <code><code>\clearpage</code></code>.</p>
+
+<pre><code><code>  $parser-&gt;StartWithNewPage(1);
+  $newpage = $parser-&gt;StartWithNewPage;</code></code></pre>
+
+<p>Default is false.</p>
+
+</dd>
+<dt id="TableOfContents"><b>TableOfContents</b></dt>
+<dd>
+
+<p>If true, a table of contents will be created. Irrelevant if <code><code>AddPreamble</code></code> is false or <code><code>UserPreamble</code></code> is set.</p>
+
+<pre><code><code>  $toc = $parser-&gt;TableOfContents;
+  $parser-&gt;TableOfContents(1);</code></code></pre>
+
+<p>Default is false.</p>
+
+</dd>
+<dt id="UniqueLabels"><b>UniqueLabels</b></dt>
+<dd>
+
+<p>If true, the translator will attempt to make sure that each <code><code>latex</code></code> label or index entry will be uniquely identified by prefixing the contents of <code><code>Label</code></code>. This allows multiple documents to be combined without clashing common labels such as <code><code>DESCRIPTION</code></code> and <code><code>SYNOPSIS</code></code></p>
+
+<pre><code><code>  $parser-&gt;UniqueLabels(1);
+  $unq = $parser-&gt;UniqueLabels;</code></code></pre>
+
+<p>Default is true.</p>
+
+</dd>
+<dt id="UserPreamble"><b>UserPreamble</b></dt>
+<dd>
+
+<p>User supplied <code><code>latex</code></code> preamble. Added before the pod translation data.</p>
+
+<p>If set, the contents will be prepended to the output file before the translated data regardless of the value of <code><code>AddPreamble</code></code>. <code><code>MakeIndex</code></code> and <code><code>TableOfContents</code></code> will also be ignored.</p>
+
+</dd>
+<dt id="UserPostamble"><b>UserPostamble</b></dt>
+<dd>
+
+<p>User supplied <code><code>latex</code></code> postamble. Added after the pod translation data.</p>
+
+<p>If set, the contents will be prepended to the output file after the translated data regardless of the value of <code><code>AddPostamble</code></code>. <code><code>MakeIndex</code></code> will also be ignored.</p>
+
+</dd>
+</dl>
+
+<h1 id="NOTES">NOTES</h1>
+
+<p>Compatible with <code><code>latex2e</code></code> only. Can not be used with <code><code>latex</code></code> v2.09 or earlier.</p>
+
+<p>A subclass of <code><code>Pod::Select</code></code> so that specific pod sections can be converted to <code><code>latex</code></code> by using the <code><code>select</code></code> method.</p>
+
+<p>Some HTML escapes are missing and many have not been tested.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../lib/Pod/Parser.html">Pod::Parser</a>, <a href="../../lib/Pod/Select.html">Pod::Select</a>, <a href="../../bin/pod2latex.html">pod2latex</a>, <a href="../../lib/Pod/Simple.html">Pod::Simple</a>.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Tim Jenness &lt;tjenness@cpan.org&gt;</p>
+
+<p>Bug fixes and improvements have been received from: Simon Cozens &lt;simon@cozens.net&gt;, Mark A. Hershberger &lt;mah@everybody.org&gt;, Marcel Grunauer &lt;marcel@codewerk.com&gt;, Hugh S Myers &lt;hsmyers@sdragons.com&gt;, Peter J Acklam &lt;jacklam@math.uio.no&gt;, Sudhi Herle &lt;sudhi@herle.net&gt;, Ariel Scolnicov &lt;ariels@compugen.co.il&gt;, Adriano Rodrigues Ferreira &lt;ferreira@triang.com.br&gt;, R. de Vries &lt;r.de.vries@dutchspace.nl&gt; and Dave Mitchell &lt;davem@iabyn.com&gt;.</p>
+
+<h1 id="COPYRIGHT">COPYRIGHT</h1>
+
+<p>Copyright (C) 2011 Tim Jenness. Copyright (C) 2000-2004 Tim Jenness. All Rights Reserved.</p>
+
+<p>This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.</p>
+
+
+</body>
+
+</html>
+
+

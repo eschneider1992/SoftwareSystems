@@ -1,0 +1,22 @@
+a) Where is GLib from and why does it exist?  Who uses it, and for what?  Would it have been better if they had given it a name less likely to be confused with glibc?
+	It was built as part of GTK+ (a GUI builder). Essentially I think the people making the GUI code made a bunch of tools for themselves (data structures, thread tools, etc.) and then split those tools out into separate libraries. I think they shouldn't have included Glib inside of GLib, I don't care about glibc as much. There's also glib?
+
+	Getting GLib has been giving me a lot of problems.
+	Getting GLib: http://linuxg.net/how-to-install-glib-2-36-3-on-ubuntu-and-linux-mint/
+
+b) What are the most important pros and cons of using GLib, as opposed to another library, or just using core C features?
+	Pros and cons scraped from the internet: http://stackoverflow.com/questions/296992/glib-v-apr-pros-and-cons-of-each
+		- GLib has more datastructures than other libraries (specifically APR)
+		- GLib has GUI tools with the connection to GTK libraries
+		- APR has better networking tools
+		- APR is more portable between Unix and Windows
+
+c) What do you have to do to compile and run a "Hello GLib" example?
+	The commands to make the GLib package are very easy, but there is a long list of libraries that also have to be on your computer. It's possible that all of these are default: https://developer.gnome.org/glib/stable/glib-building.html
+
+	To compile a hello world program, you need to carefully link all of the libraries that you use, and some of them always need to be linked. Seems like a fussy bit of command line compiling: https://developer.gnome.org/glib/stable/glib-compiling.html
+
+	Running the program reads a variety of common system variables: https://developer.gnome.org/glib/stable/glib-running.html
+
+	I needed to use this link: http://linuxg.net/how-to-install-glib-2-36-3-on-ubuntu-and-linux-mint/
+	I also needed to change automake-1.13 to automake-1.13.2

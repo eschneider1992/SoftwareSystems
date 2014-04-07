@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../../displayToc.js"></script>
+<script language="JavaScript" src="../../../tocParas.js"></script>
+<script language="JavaScript" src="../../../tocTab.js"></script>
+<title></title>
+<link rel="stylesheet" href="../../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#COPYING">COPYING</a></li>
+  <li><a href="#BUGS">BUGS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Module::Pluggable::Object - automatically give your module the ability to have plugins</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p>Simple use Module::Pluggable -</p>
+
+<pre><code><code>    package MyClass;
+    use Module::Pluggable::Object;
+    
+    my $finder = Module::Pluggable::Object-&gt;new(%opts);
+    print &quot;My plugins are: &quot;.join(&quot;, &quot;, $finder-&gt;plugins).&quot;\n&quot;;</code></code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Provides a simple but, hopefully, extensible way of having &#39;plugins&#39; for your module. Obviously this isn&#39;t going to be the be all and end all of solutions but it works for me.</p>
+
+<p>Essentially all it does is export a method into your namespace that looks through a search path for .pm files and turn those into class names.</p>
+
+<p>Optionally it instantiates those classes for you.</p>
+
+<p>This object is wrapped by <code><code>Module::Pluggable</code></code>. If you want to do something odd or add non-general special features you&#39;re probably best to wrap this and produce your own subclass.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p>See the <code><code>Module::Pluggable</code></code> docs.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Simon Wistow &lt;simon@thegestalt.org&gt;</p>
+
+<h1 id="COPYING">COPYING</h1>
+
+<p>Copyright, 2006 Simon Wistow</p>
+
+<p>Distributed under the same terms as Perl itself.</p>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>None known.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="../../../lib/Module/Pluggable.html">Module::Pluggable</a></p>
+
+
+</body>
+
+</html>
+
+

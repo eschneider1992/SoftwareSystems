@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0017)http://localhost/ -->
+<script language="JavaScript" src="../../displayToc.js"></script>
+<script language="JavaScript" src="../../tocParas.js"></script>
+<script language="JavaScript" src="../../tocTab.js"></script>
+<title></title>
+<link rel="stylesheet" href="../../Active.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#list_packages-package-name">list_packages &lt;package name&gt;</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+  <li><a href="#COPYING">COPYING</a></li>
+  <li><a href="#BUGS">BUGS</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>Devel::InnerPackage - find all the inner packages of a package</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code><code>    use Foo::Bar;
+    use Devel::InnerPackage qw(list_packages);
+
+    my @inner_packages = list_packages(&#39;Foo::Bar&#39;);</code></code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>Given a file like this</p>
+
+<pre><code><code>    package Foo::Bar;
+
+    sub foo {}
+
+
+    package Foo::Bar::Quux;
+
+    sub quux {}
+
+    package Foo::Bar::Quirka;
+
+    sub quirka {}
+
+    1;</code></code></pre>
+
+<p>then</p>
+
+<pre><code><code>    list_packages(&#39;Foo::Bar&#39;);</code></code></pre>
+
+<p>will return</p>
+
+<pre><code><code>    Foo::Bar::Quux
+    Foo::Bar::Quirka</code></code></pre>
+
+<h1 id="METHODS">METHODS</h1>
+
+<h2 id="list_packages-package-name">list_packages &lt;package name&gt;</h2>
+
+<p>Return a list of all inner packages of that package.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Simon Wistow &lt;simon@thegestalt.org&gt;</p>
+
+<h1 id="COPYING">COPYING</h1>
+
+<p>Copyright, 2005 Simon Wistow</p>
+
+<p>Distributed under the same terms as Perl itself.</p>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>None known.</p>
+
+
+</body>
+
+</html>
+
+

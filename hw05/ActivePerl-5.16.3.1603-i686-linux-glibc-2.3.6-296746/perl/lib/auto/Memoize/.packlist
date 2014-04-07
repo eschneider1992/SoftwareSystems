@@ -1,0 +1,16 @@
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/AnyDBM_File.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/Expire.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/ExpireFile.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/ExpireTest.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/NDBM_File.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/SDBM_File.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/lib/Memoize/Storable.pm
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::AnyDBM_File.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::Expire.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::ExpireFile.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::ExpireTest.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::NDBM_File.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::SDBM_File.3
+/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------/man/man3/Memoize::Storable.3

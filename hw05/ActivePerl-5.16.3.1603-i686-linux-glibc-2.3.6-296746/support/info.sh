@@ -1,0 +1,11 @@
+i_sponge=/tmp/perl---------------------------------------------please-run-the-install-script---------------------------------------------
+i_archname=i686-linux-thread-multi
+i_osname=linux
+i_osvers=2.6.17-1.2142_fc4
+i_gnulibc_version=2.3.6
+i_compiler=gcc
+i_compiler_version="4.0.2 20051125 (Red Hat 4.0.2-8)"
+i_perl_product=ActivePerl
+i_perl_version=5.16.3
+i_perl_build=1603
+i_p4change=296746
