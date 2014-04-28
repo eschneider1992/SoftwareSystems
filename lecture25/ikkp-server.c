@@ -134,30 +134,45 @@ int main(int argc, char *argv[])
 
     while (1) {
 	connect_d = open_client_socket();
+	int pid = fork();
+	if (pid == 0) {
+		if (say(connect_d, intro_msg) == -1) {
+		    fprintf(stderr, "Unable to say, error: %d", errno);
+		    close(connect_d);
+		    continue;
+		}
 
-	if (say(connect_d, intro_msg) == -1) {
-	    close(connect_d);
-	    continue;
-	}
-
-	read_in(connect_d, buf, sizeof(buf));
-	// check to make sure they said "Who's there?"
+		read_in(connect_d, buf, sizeof(buf));
+		if (strncasecmp("Who's there?", buf,12)) {
+		    sprintf(buf, "You should've said 'Who's there?' I'm offended. I'm leaving.\n");
+		    say(connect_d, buf);
+		    close(connect_d);
+		    continue;
+		}
 	
-	if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-	    close(connect_d);
-	    continue;
-	}
+		if (say(connect_d, "Surrealist giraffe.\n") == -1) {
+		    fprintf(stderr, "Unable to say, error: %d", errno);
+		    close(connect_d);
+		    continue;
+		}
 
-	read_in(connect_d, buf, sizeof(buf));
-	// check to make sure they said "Surrealist giraffe who?"
+		read_in(connect_d, buf, sizeof(buf));
+		if (strncasecmp("Surrealist giraffe who?", buf,23)) {
+		    sprintf(buf, "You should've said 'Surrealist giraffe who?' you ass! I'm leaving.\n");
+		    say(connect_d, buf);
+		    close(connect_d);
+		    continue;
+		}
 
- 
-	if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-	    close(connect_d);
-	    continue;
-	}
+	 
+		if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+		    fprintf(stderr, "Unable to say, error: %d", errno);
+		    close(connect_d);
+		    continue;
+		}
 
-	close(connect_d);
+		close(connect_d);
+	}	else close(connect_d);
     }
     return 0;
 }

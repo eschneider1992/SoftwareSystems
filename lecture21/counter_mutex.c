@@ -93,9 +93,9 @@ void child_code (Shared *shared)
     shared->array[shared->counter]++;
     shared->counter++;
 
-    if (shared->counter % 10000 == 0) {
-      printf ("%d\n", shared->counter);
-    }
+//    if (shared->counter % 10000 == 0) {
+//      printf ("%d\n", shared->counter);
+//    }
     sem_signal(shared->mutex);
   }
 }

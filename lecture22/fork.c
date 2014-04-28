@@ -20,9 +20,17 @@ double get_seconds () {
   return tv->tv_sec + tv->tv_usec / 1e6;
 }
 
+int global = 0;
 
-void child_code(int i) 
+
+void child_code(int i, int *heap) 
 {
+  global = i;
+  printf ("Global (child %d) is %d.\n", i, global);
+  *heap = i;
+  printf ("Heap (child %d) is %d.\n", i, *heap); 
+  printf ("Heap pointer (child %d) is %p.\n", i, heap); 
+
   sleep (i);
   printf ("Hello from child %d.\n", i);
   exit (i);
@@ -37,6 +45,8 @@ int main (int argc, char *argv[])
   pid_t pid;
   double start, stop;
   int i, num_children;
+  int *heap = malloc(sizeof(int));
+  *heap = -1;
 
   // the first command-line argument is the name of the executable.
   // if there is a second, it is the number of children to create.
@@ -64,12 +74,15 @@ int main (int argc, char *argv[])
 
     /* see if we're the parent or the child */
     if (pid == 0) {
-      child_code(i);
+      child_code(i, heap);
     }
   }
 
+  sleep(num_children);
   /* parent continues */
   printf ("Hello from the parent.\n");
+  printf ("Global (parent) is %d.\n", global); 
+  printf ("Heap (parent) is %d.\n", *heap); 
 
   for (i=0; i<num_children; i++) {
     pid = wait (&status);

@@ -44,6 +44,7 @@ typedef struct {
   int counter;
   int end;
   int *array;
+  Semaphore *mutex;
 } Shared;
 
 Shared *make_shared (int end)
@@ -58,6 +59,8 @@ Shared *make_shared (int end)
   for (i=0; i<shared->end; i++) {
     shared->array[i] = 0;
   }
+
+  shared->mutex = make_semaphore(1);
   return shared;
 }
 
@@ -81,16 +84,23 @@ void child_code (Shared *shared)
 {
   printf ("Starting child at counter %d\n", shared->counter);
 
+  int index;
+
   while (1) {
-    if (shared->counter >= shared->end) {
+    
+    sem_wait(shared->mutex);
+    index = shared->counter++;
+    sem_signal(shared->mutex);
+
+    if (index >= shared->end) {
       return;
     }
-    shared->array[shared->counter]++;
-    shared->counter++;
 
-    if (shared->counter % 10000 == 0) {
-      printf ("%d\n", shared->counter);
-    }
+    shared->array[index]++;
+
+//    if (index % 10000 == 0) {
+//      printf ("%d\n", shared->counter);
+//    }
   }
 }
 
